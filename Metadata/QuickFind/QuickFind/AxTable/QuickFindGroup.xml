@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxTable xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>QuickFindGroup</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+//This document is provided “as-is.” Information and views expressed in this document, including URL and other Internet Web site references, may change without notice. You bear the risk of using it.
+//THE SAMPLE CODE AND ANY RELATED INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+//This document does not provide you with any legal rights to any intellectual property in any Microsoft product.
+public class QuickFindGroup extends common
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>doesUserHaveAccessToOneMenuItemInGroup</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Determines if a user has access to at least one menu item in the quick find group
+    /// </summary>
+    /// <param name = "_group">The quick find group id to check if user has access to one of the menu items</param>
+    /// <returns>true if the user has access to one of the menu items in the group, false if not</returns>
+    public static boolean doesUserHaveAccessToOneMenuItemInGroup(QuickFindGroupId _group)
+    {
+        boolean ret;
+
+        QuickFindGroupMenuItemTableRelation groupMenuItemTableRelation;
+        QuickFindMenuItemTable              menuItemTable;
+
+        while select menuItemTable join groupMenuItemTableRelation
+            where menuItemTable.MenuItemName == groupMenuItemTableRelation.QuickFindMenuItemName && groupMenuItemTableRelation.QuickFindGroup == _group
+        {
+            MenuFunction menuFunction = new MenuFunction(menuItemTable.MenuItemName, MenuItemType::Display);
+            if (menuFunction.checkAccessRights())
+            {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>find</Name>
+				<Source><![CDATA[
+    public static QuickFindGroup find(QuickFindGroupId _groupId, boolean _forUpdate = false)
+    {
+        QuickFindGroup  quickFindGroup;
+        if (_groupId)
+        {
+            if (_forUpdate)
+            {
+                QuickFindGroup.selectForUpdate(_forUpdate);
+            }
+            select firstonly quickFindGroup 
+                where quickFindGroup.QuickFindGroup == _groupId;
+        }
+
+        return quickFindGroup;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+	<DeveloperDocumentation>@QuickFind:DD_QuickFindGroup</DeveloperDocumentation>
+	<FormRef>QuickFindGroupMenuItemTable</FormRef>
+	<Label>@QuickFind:QuickFindGroups</Label>
+	<SubscriberAccessLevel>
+		<Read>Allow</Read>
+	</SubscriberAccessLevel>
+	<TableGroup>Group</TableGroup>
+	<TitleField1>QuickFindGroup</TitleField1>
+	<CacheLookup>EntireTable</CacheLookup>
+	<ClusteredIndex>PrimaryIdx</ClusteredIndex>
+	<CreatedBy>Yes</CreatedBy>
+	<CreatedDateTime>Yes</CreatedDateTime>
+	<ModifiedBy>Yes</ModifiedBy>
+	<ModifiedDateTime>Yes</ModifiedDateTime>
+	<ReplacementKey>PrimaryIdx</ReplacementKey>
+	<DeleteActions />
+	<FieldGroups>
+		<AxTableFieldGroup>
+			<Name>AutoReport</Name>
+			<Fields>
+				<AxTableFieldGroupField>
+					<DataField>QuickFindGroup</DataField>
+				</AxTableFieldGroupField>
+				<AxTableFieldGroupField>
+					<DataField>LabelId</DataField>
+				</AxTableFieldGroupField>
+			</Fields>
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoLookup</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoIdentification</Name>
+			<AutoPopulate>Yes</AutoPopulate>
+			<Fields>
+				<AxTableFieldGroupField>
+					<DataField>QuickFindGroup</DataField>
+				</AxTableFieldGroupField>
+			</Fields>
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoSummary</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoBrowse</Name>
+			<Fields />
+		</AxTableFieldGroup>
+	</FieldGroups>
+	<Fields>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>QuickFindGroup</Name>
+			<AllowEdit>No</AllowEdit>
+			<ExtendedDataType>QuickFindGroupId</ExtendedDataType>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>LabelId</Name>
+			<ExtendedDataType>LabelId</ExtendedDataType>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+	</Fields>
+	<FullTextIndexes />
+	<Indexes>
+		<AxTableIndex>
+			<Name>PrimaryIdx</Name>
+			<AlternateKey>Yes</AlternateKey>
+			<Fields>
+				<AxTableIndexField>
+					<DataField>QuickFindGroup</DataField>
+				</AxTableIndexField>
+			</Fields>
+		</AxTableIndex>
+	</Indexes>
+	<Mappings />
+	<Relations />
+	<StateMachines />
+</AxTable>

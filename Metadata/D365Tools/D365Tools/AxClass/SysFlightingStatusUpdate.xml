@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>SysFlightingStatusUpdate</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+using Microsoft.Dynamics.ApplicationPlatform.FeatureExposure.FeatureStateProvider;
+using Microsoft.Dynamics.AX.Metadata.MetaModel;
+public class SysFlightingStatusUpdate
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>main</Name>
+				<Source><![CDATA[
+    public static void main(Args _args)
+    {
+        var classNames = Microsoft.Dynamics.Ax.Xpp.MetadataSupport::ClassNames();
+        SysFlightingStatus sysFlightingStatus;
+        delete_from sysFlightingStatus;
+        while (ClassNames.moveNext())
+        {
+            AxClass axClass = Microsoft.Dynamics.Ax.Xpp.MetadataSupport::GetClass(classNames.current);
+            if (axClass.extends == 'Flight')
+            {
+                DictClass dictClass = new DictClass(className2Id(AxClass.name));
+                Flight    flight    = DictClass.makeObject();
+                boolean   enabled   = Dynamics.AX.Application.FeatureStateProvider::isFeatureEnabled(Flight);
+                
+                SysFlightingStatus.FlightName = axClass.name;
+                SysFlightingStatus.Enabled = enabled;
+                SysFlightingStatus.insert();
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

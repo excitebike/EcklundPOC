@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<z:anyType xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns=""
+	i:type="AxCompilerMetadata" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+	<IsFinal>true</IsFinal>
+	<IsInternal>true</IsInternal>
+	<Attributes>
+		<AxAttribute>
+			<Name>ExtensionOf</Name>
+			<Parameters>
+				<AxAttributeParameter>
+					<Type>Intrinsic</Type>
+					<TypeValue>classStr</TypeValue>
+					<AdditionalData>
+						<AxAttributeParameter>
+							<TypeValue>SysListPanelRelationTable</TypeValue>
+							<AdditionalData />
+						</AxAttributeParameter>
+						<AxAttributeParameter>
+							<AdditionalData />
+						</AxAttributeParameter>
+						<AxAttributeParameter>
+							<AdditionalData />
+						</AxAttributeParameter>
+					</AdditionalData>
+				</AxAttributeParameter>
+			</Parameters>
+		</AxAttribute>
+	</Attributes>
+	<Members>
+		<AxClassMemberVariable>
+			<Type>Int32</Type>
+			<TypeName></TypeName>
+			<Name>i</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Type>Record</Type>
+			<TypeName>SysCorpNetPrinters</TypeName>
+			<Name>printers</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Type>ExtendedDataType</Type>
+			<TypeName>FilePath</TypeName>
+			<Name>printerPath</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Type>Record</Type>
+			<TypeName>DocumentRoutingClientApp</TypeName>
+			<Name>xClientApp</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Type>Record</Type>
+			<TypeName>DocumentRoutingPrinterAppAssociation</TypeName>
+			<Name>xAppAssociation</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Type>Container</Type>
+			<TypeName></TypeName>
+			<Name>printerContainer</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+		<AxClassMemberVariable>
+			<Type>ExtendedDataType</Type>
+			<TypeName>RecId</TypeName>
+			<Name>printerRecId</Name>
+			<Attributes />
+			<Visibility>Private</Visibility>
+		</AxClassMemberVariable>
+	</Members>
+	<Methods>
+		<Method>
+			<Name>initData</Name>
+			<Parameters>
+				<AxMethodParameter>
+					<Type>Container</Type>
+					<TypeName></TypeName>
+					<Name>data</Name>
+				</AxMethodParameter>
+			</Parameters>
+			<ReturnType>
+				<TypeName></TypeName>
+			</ReturnType>
+		</Method>
+		<Method>
+			<Name>removeData</Name>
+			<Visibility>Public</Visibility>
+			<Parameters>
+				<AxMethodParameter>
+					<Type>Container</Type>
+					<TypeName></TypeName>
+					<Name>data</Name>
+				</AxMethodParameter>
+			</Parameters>
+			<ReturnType>
+				<TypeName></TypeName>
+			</ReturnType>
+		</Method>
+		<Method>
+			<Name>addData</Name>
+			<Visibility>Public</Visibility>
+			<Parameters>
+				<AxMethodParameter>
+					<Type>Container</Type>
+					<TypeName></TypeName>
+					<Name>data</Name>
+				</AxMethodParameter>
+			</Parameters>
+			<ReturnType>
+				<TypeName></TypeName>
+			</ReturnType>
+		</Method>
+	</Methods>
+</z:anyType>

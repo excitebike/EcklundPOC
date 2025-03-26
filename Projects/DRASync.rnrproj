@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <BuildTasksDirectory Condition=" '$(BuildTasksDirectory)' == ''">$(MSBuildProgramFiles32)\MSBuild\Microsoft\Dynamics\AX</BuildTasksDirectory>
+    <Model>D365Tools</Model>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <OutputPath>bin</OutputPath>
+    <SchemaVersion>2.0</SchemaVersion>
+    <GenerateCrossReferences>True</GenerateCrossReferences>
+    <RunAppCheckerRules>False</RunAppCheckerRules>
+    <LogAppcheckerDiagsAsErrors>False</LogAppcheckerDiagsAsErrors>
+    <DeployOnline>False</DeployOnline>
+    <ProjectGuid>{88979c81-1643-4f2e-85d7-b243cc179e81}</ProjectGuid>
+    <Name>DRASync</Name>
+    <RootNamespace>DRASync</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <Configuration>Debug</Configuration>
+    <DBSyncInBuild>True</DBSyncInBuild>
+    <GenerateFormAdaptors>False</GenerateFormAdaptors>
+    <Company>
+    </Company>
+    <Partition>initial</Partition>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DataEntityExpandParentChildRelations>False</DataEntityExpandParentChildRelations>
+    <DataEntityUseLabelTextAsFieldName>False</DataEntityUseLabelTextAsFieldName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
+    <Folder Include="Display Menu Items\" />
+    <Folder Include="Forms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AxClass\SimulateDRARegisterCopy">
+      <SubType>Content</SubType>
+      <Name>SimulateDRARegisterCopy</Name>
+      <Link>Classes\SimulateDRARegisterCopy</Link>
+    </Content>
+    <Content Include="AxClass\SysListPanelRelationTable_ExtensionCopy">
+      <SubType>Content</SubType>
+      <Name>SysListPanelRelationTable_ExtensionCopy</Name>
+      <Link>Classes\SysListPanelRelationTable_ExtensionCopy</Link>
+    </Content>
+    <Content Include="AxForm\ClientAppPrinterRegistrationCopy">
+      <SubType>Content</SubType>
+      <Name>ClientAppPrinterRegistrationCopy</Name>
+      <Link>Forms\ClientAppPrinterRegistrationCopy</Link>
+    </Content>
+    <Content Include="AxMenuItemDisplay\ClientAppPrinterRegistrationCopy">
+      <SubType>Content</SubType>
+      <Name>ClientAppPrinterRegistrationCopy</Name>
+      <Link>Display Menu Items\ClientAppPrinterRegistrationCopy</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <Import Project="$(BuildTasksDirectory)\Microsoft.Dynamics.Framework.Tools.BuildTasks.17.0.targets" />
+</Project>

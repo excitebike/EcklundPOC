@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>QuickFindFormAdaptorTabPageGroup</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+//This document is provided “as-is.” Information and views expressed in this document, including URL and other Internet Web site references, may change without notice. You bear the risk of using it.
+//THE SAMPLE CODE AND ANY RELATED INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+//This document does not provide you with any legal rights to any intellectual property in any Microsoft product.
+using Microsoft.Dynamics.AX.Metadata.MetaModel;
+class QuickFindFormAdaptorTabPageGroup
+{
+    FormRun         FormRun;
+    FormTabControl  formTabControl;    
+    Map             stringControlFormNameMap    = new Map(Types::String, Types::String);
+
+    const           str tabPageControlConstant  = "TabPageControl";
+    const           str stringControlConstant   = 'StringControl';  
+ 
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>new</Name>
+				<Source><![CDATA[
+    public void new(FormRun _formRun, FormTabControl _formTabControl)
+    {
+        formRun         = _formRun;
+        formTabControl  = _formTabControl;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>addStringControlToTabPage</Name>
+				<Source><![CDATA[
+    protected void addStringControlToTabPage(FormTabPageControl _formTabPageControl, QuickFindMenuItemTable _menuItemTable)
+    {
+        str stringControlName = formRun.getRangedUniqueControlName(StringControlConstant);
+        FormStringControl stringControl = _formTabPageControl.addControl(FormControlType::String, stringControlName);
+            
+        stringControlFormNameMap.insert(stringControl.name(), _menuItemTable.MenuItemName);
+        
+        this.setStringControlProperties(stringControl, _menuItemTable);
+        this.registerOverrideMethods(stringControl);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createTabPageControl</Name>
+				<Source><![CDATA[
+    protected FormTabPageControl createTabPageControl(str _caption)
+    {
+        str tabPageControlName = formRun.getRangedUniqueControlName(tabPageControlConstant);
+        FormTabPageControl formTabPageControl = formTabControl.addControl(FormControlType::TabPage, tabPageControlName);
+        formTabPageControl.caption(_caption);
+        formTabPageControl.columns(5);
+     
+        return formTabPageControl;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>init</Name>
+				<Source><![CDATA[
+    public void init()
+    {   
+        QuickFindGroupId   groupId;
+        FormTabPageControl formTabPageControl;
+
+        QuickFindGroup                      quickFindGroup;
+        QuickFindMenuItemTable              menuItemTable;
+        QuickFindGroupMenuItemTableRelation groupMenuItemTableRelation;
+        
+        while select menuItemTable join groupMenuItemTableRelation join quickFindGroup
+            where menuItemTable.MenuItemName == groupMenuItemTableRelation.QuickFindMenuItemName &&
+                groupMenuItemTableRelation.QuickFindGroup == quickFindGroup.QuickFindGroup
+        {
+            if (groupId != groupMenuItemTableRelation.QuickFindGroup)
+            {
+                groupId = groupMenuItemTableRelation.QuickFindGroup;
+                if (QuickFindGroup::doesUserHaveAccessToOneMenuItemInGroup(groupMenuItemTableRelation.QuickFindGroup))
+                {
+                    formTabPageControl = this.createTabPageControl(SysLabel::isLabelId(QuickFindGroup.LabelId) ? SysLabel::labelId2String(QuickFindGroup.LabelId) : quickFindGroup.labelId);
+                } 
+            }
+            if (QuickFindMenuItemTableHelper::doesUserHaveAccessToMenuItem(menuItemTable.MenuItemName))
+            {
+                this.addStringControlToTabPage(formTabPageControl, menuItemTable);
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>registerOverrideMethods</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Register any necessary override methods for the string control
+    /// </summary>
+    /// <param name = "_stringControl">the strin</param>
+    protected void registerOverrideMethods(FormStringControl _stringControl)
+    {
+        _stringControl.registerOverrideMethod(methodStr(FormStringControl, modified), methodStr(QuickFindFormAdaptorTabPageGroup, StringControlModifiedOverride),this);
+        _stringControl.registerOverrideMethod(methodStr(FormStringControl, leave), methodStr(QuickFindFormAdaptorTabPageGroup, stringControlLeaveOverride),this);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>setStringControlProperties</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Set the properties of a string control
+    /// </summary>
+    /// <param name = "_stringControl">The string control to set the properties to</param>
+    /// <param name = "_menuItemTable">Table buffer with the associated menui item settings</param>
+    protected void setStringControlProperties(FormStringControl _stringControl, QuickFindMenuItemTable _menuItemTable)
+    {
+        _stringControl.extendedDataType(_menuItemTable.KeyFieldEDTTypeId);
+        _stringControl.label(SysLabel::isLabelId(_menuItemTable.LabelId) ? SysLabel::labelId2String(_menuItemTable.LabelId) : _menuItemTable.LabelId);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>stringControlLeaveOverride</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Override method for .leave() on the string control.
+    /// Blank out the value as we only want one sting value at a time to be populated
+    /// </summary>
+    /// <param name = "_stringControl">The string control to override the method of</param>
+    /// <returns>super() method boolean</returns>
+    protected boolean stringControlLeaveOverride(FormStringControl _stringControl)
+    {
+        _stringControl.text('');
+    
+        return _stringControl.leave();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>stringControlModifiedOverride</Name>
+				<Source><![CDATA[
+    protected boolean stringControlModifiedOverride(FormStringControl _stringControl)
+    {
+        QuickFindMenuItemTableHelper menuItemTableHelper = new QuickFindMenuItemTableHelper();
+        menuItemTableHelper.initFromMenuItemName(stringControlFormNameMap.lookup(_stringControl.name()));
+    
+        QuickFindOpenForm quickFindOpenForm = QuickFindOpenForm::constructFromTableName(menuItemTableHelper.parmMenuItemTable().KeyTableName);
+        quickFindOpenForm.initFromMenuItemTableHelper(menuItemTableHelper);
+        boolean ret = quickFindOpenForm.run(_stringControl.valueStr());
+        
+        if (ret)
+        {
+            _stringControl.text('');
+            ret = _stringControl.modified();
+        }
+
+        return ret;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

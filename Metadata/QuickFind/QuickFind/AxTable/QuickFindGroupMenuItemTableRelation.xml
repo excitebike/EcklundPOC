@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxTable xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>QuickFindGroupMenuItemTableRelation</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+//This document is provided “as-is.” Information and views expressed in this document, including URL and other Internet Web site references, may change without notice. You bear the risk of using it.
+//THE SAMPLE CODE AND ANY RELATED INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+//This document does not provide you with any legal rights to any intellectual property in any Microsoft product.
+public class QuickFindGroupMenuItemTableRelation extends common
+{
+}
+
+]]></Declaration>
+		<Methods />
+	</SourceCode>
+	<DeveloperDocumentation>@QuickFind:DD_QuickFindGroupMenutItemTable</DeveloperDocumentation>
+	<Label>@QuickFind:QuickFindGroupMenuItemTableRelation</Label>
+	<SubscriberAccessLevel>
+		<Read>Allow</Read>
+	</SubscriberAccessLevel>
+	<TableGroup>Main</TableGroup>
+	<TitleField1>QuickFindGroup</TitleField1>
+	<TitleField2>QuickFindMenuItemName</TitleField2>
+	<CacheLookup>EntireTable</CacheLookup>
+	<ClusteredIndex>PrimaryIdx</ClusteredIndex>
+	<CreatedBy>Yes</CreatedBy>
+	<CreatedDateTime>Yes</CreatedDateTime>
+	<ModifiedBy>Yes</ModifiedBy>
+	<ModifiedDateTime>Yes</ModifiedDateTime>
+	<PrimaryIndex>PrimaryIdx</PrimaryIndex>
+	<ReplacementKey>PrimaryIdx</ReplacementKey>
+	<DeleteActions />
+	<FieldGroups>
+		<AxTableFieldGroup>
+			<Name>AutoReport</Name>
+			<Fields>
+				<AxTableFieldGroupField>
+					<DataField>QuickFindGroup</DataField>
+				</AxTableFieldGroupField>
+				<AxTableFieldGroupField>
+					<DataField>QuickFindMenuItemName</DataField>
+				</AxTableFieldGroupField>
+			</Fields>
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoLookup</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoIdentification</Name>
+			<AutoPopulate>Yes</AutoPopulate>
+			<Fields>
+				<AxTableFieldGroupField>
+					<DataField>QuickFindGroup</DataField>
+				</AxTableFieldGroupField>
+				<AxTableFieldGroupField>
+					<DataField>QuickFindMenuItemName</DataField>
+				</AxTableFieldGroupField>
+			</Fields>
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoSummary</Name>
+			<Fields />
+		</AxTableFieldGroup>
+		<AxTableFieldGroup>
+			<Name>AutoBrowse</Name>
+			<Fields />
+		</AxTableFieldGroup>
+	</FieldGroups>
+	<Fields>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>QuickFindGroup</Name>
+			<AllowEdit>No</AllowEdit>
+			<ExtendedDataType>QuickFindGroupId</ExtendedDataType>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+		<AxTableField xmlns=""
+			i:type="AxTableFieldString">
+			<Name>QuickFindMenuItemName</Name>
+			<AllowEdit>No</AllowEdit>
+			<ExtendedDataType>MenuItemNameDisplay</ExtendedDataType>
+			<Mandatory>Yes</Mandatory>
+		</AxTableField>
+	</Fields>
+	<FullTextIndexes />
+	<Indexes>
+		<AxTableIndex>
+			<Name>PrimaryIdx</Name>
+			<AlternateKey>Yes</AlternateKey>
+			<Fields>
+				<AxTableIndexField>
+					<DataField>QuickFindGroup</DataField>
+				</AxTableIndexField>
+				<AxTableIndexField>
+					<DataField>QuickFindMenuItemName</DataField>
+				</AxTableIndexField>
+			</Fields>
+		</AxTableIndex>
+	</Indexes>
+	<Mappings />
+	<Relations>
+		<AxTableRelation>
+			<Name>QuickFindGroup</Name>
+			<Cardinality>ZeroMore</Cardinality>
+			<OnDelete>Cascade</OnDelete>
+			<RelatedTable>QuickFindGroup</RelatedTable>
+			<RelatedTableCardinality>ExactlyOne</RelatedTableCardinality>
+			<RelationshipType>Association</RelationshipType>
+			<Constraints>
+				<AxTableRelationConstraint xmlns=""
+					i:type="AxTableRelationConstraintField">
+					<Name>QuickFindGroup</Name>
+					<Field>QuickFindGroup</Field>
+					<RelatedField>QuickFindGroup</RelatedField>
+				</AxTableRelationConstraint>
+			</Constraints>
+		</AxTableRelation>
+		<AxTableRelation>
+			<Name>QuickFindMenuItemTable</Name>
+			<Cardinality>ZeroMore</Cardinality>
+			<OnDelete>Cascade</OnDelete>
+			<RelatedTable>QuickFindMenuItemTable</RelatedTable>
+			<RelatedTableCardinality>ExactlyOne</RelatedTableCardinality>
+			<RelationshipType>Association</RelationshipType>
+			<Constraints>
+				<AxTableRelationConstraint xmlns=""
+					i:type="AxTableRelationConstraintField">
+					<Name>QuickFindMenuItemName</Name>
+					<Field>QuickFindMenuItemName</Field>
+					<RelatedField>MenuItemName</RelatedField>
+				</AxTableRelationConstraint>
+			</Constraints>
+		</AxTableRelation>
+	</Relations>
+	<StateMachines />
+</AxTable>
